@@ -1,5 +1,5 @@
 #include "ros/ros.h"
-#include <iiwa_ros.h>
+#include <iiwa_ros/command/cartesian_pose.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
 
 using moveit::planning_interface::MoveItErrorCode;
@@ -14,8 +14,8 @@ int main (int argc, char **argv) {
   ros::AsyncSpinner spinner(1);
   spinner.start();
   
-  iiwa_ros::iiwaRos my_iiwa;
-  my_iiwa.init();
+  iiwa_ros::Comman my_iiwa;
+  my_iiwa.init(nh.getNamespace());
   
   std::string movegroup_name, ee_link;
   geometry_msgs::PoseStamped command_cartesian_position;
@@ -41,7 +41,7 @@ int main (int argc, char **argv) {
   group.setEndEffectorLink(ee_link);
   MoveItErrorCode success_plan = MoveItErrorCode::FAILURE, motion_done = MoveItErrorCode::FAILURE;
   while (ros::ok()) {
-    if (my_iiwa.getRobotIsConnected()) {
+    if (my_iiwa.isConnected()) {
       
       command_cartesian_position = group.getCurrentPose(ee_link);  
       command_cartesian_position.pose.position.z -= direction * 0.10;

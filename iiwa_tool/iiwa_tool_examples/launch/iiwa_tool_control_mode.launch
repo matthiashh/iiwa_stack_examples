@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="tool_name" default="tool"/> <!-- Name of the tool we are going to use -->
-  
+
   <!-- Parameters to pass to the ROS node -->
   <arg name="joint_position_topic" default="/iiwa/state/JointPosition"/>
   <arg name="cartesian_position_topic" default="/iiwa/state/CartesianPose"/>
   <arg name="ros_rate" default="0.1"/>
   
   <param name="/iiwa/publishJointStates" type="boolean" value="true" /> <!--publish joint states (avoid joint_state_controller)-->
-  <param name="/iiwa/toolName" type="string" value="$(arg tool_name)" /> <!--Sunrise tool-->
+
   
   <!--  This loads the robot description  -->
-  <include ns="iiwa" file="$(find iiwa_tool_moveit)/launch/planning_context.launch">
+  <include ns="iiwa" file="$(find iiwa_moveit)/launch/planning_context.launch">
     <arg name="load_robot_description" value="true"/>
+    <arg name="model" value="iiwa7"/>
   </include>
   
   <!-- This publishes the state of the robot   -->

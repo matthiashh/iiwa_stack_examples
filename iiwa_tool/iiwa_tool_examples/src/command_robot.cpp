@@ -1,4 +1,7 @@
-#include <iiwa_ros.h>
+#include <iiwa_ros/iiwa_ros.hpp>
+#include <iiwa_ros/service/control_mode.hpp>
+#include <iiwa_msgs/JointPosition.h>
+#include <geometry_msgs/PoseStamped.h>
 #include <cmath>
 
 // getTimeToDestination() can also return negative values and the info from the cabinet take some milliseconds to update once the motion is started.
@@ -27,7 +30,7 @@ int main (int argc, char **argv) {
 	ros::AsyncSpinner spinner(1);
 	spinner.start();
   
-  iiwa_ros::iiwaRos my_iiwa;
+  iiwa_ros::service::ControlModeService my_iiwa;
   my_iiwa.init();
 	
 	// Dynamic parameters. Last arg is the default value. You can assign these from a launch file.
