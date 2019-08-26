@@ -28,22 +28,28 @@ int main (int argc, char **argv) {
   
   while (job_done && ros::ok()) {
     if (my_pos.isConnected()) {
-      
-//      ROS_INFO_STREAM("The robot will be now set in Cartesian Impedance Mode");
-//      // Low stiffness only along Z.
-//      my_iiwa.setCartesianImpedanceMode(iiwa_ros::conversions::CartesianQuantityFromFloat(1500,1500,350,300,300,300), iiwa_ros::conversions::CartesianQuantityFromFloat(.7f));
-//      ROS_INFO_STREAM("In 20 seconds the robot will go back to Position Control Mode");
-//      ros::Duration(20.0).sleep();
-      
-//      my_iiwa.setPositionControlMode();
-//      ROS_INFO_STREAM("In 20 seconds the robot will be set in Joint Impedance Mode");
-//      ros::Duration(20.0).sleep();
+      my_iiwa.setPositionControlMode();
+      // Low stiffness only along Z.
+      my_iiwa.setCartesianImpedanceMode(iiwa_ros::conversions::CartesianQuantityFromFloat(1500,1500,350,300,300,300), iiwa_ros::conversions::CartesianQuantityFromFloat(.7f));
+      ROS_INFO_STREAM("Low Cartesian impedance on Z-Axis - In 20 seconds the robot will go to gravity compensation");
+      ros::Duration(20.0).sleep();
+
+      // Low Cartesian stiffness along all axis
+      my_iiwa.setCartesianImpedanceMode(iiwa_ros::conversions::CartesianQuantityFromFloat(10,10,10,300,300,300), iiwa_ros::conversions::CartesianQuantityFromFloat(.7f));
+      ROS_INFO_STREAM("Cartesian Impedance - Gravity Free - In 20 seconds the robot will go back to Position Control Mode");
+      ros::Duration(20.0).sleep();
+
+      // Back to position control mode
+      my_iiwa.setPositionControlMode();
+      ROS_INFO_STREAM("Position Control Mode - In 20 seconds the robot will be set in Joint Impedance Mode");
+      ros::Duration(20.0).sleep();
       
       // Low stiffness only for the 6th joint.
       my_iiwa.setJointImpedanceMode(iiwa_ros::conversions::jointQuantityFromFloat(1500,1500,1500,1500,1500,0,1500), iiwa_ros::conversions::jointQuantityFromFloat(.7f));
-      ROS_INFO_STREAM("In 20 seconds the robot will go back to Position Control Mode");
+      ROS_INFO_STREAM("Joint Impadance 6th axis is free - In 20 seconds the robot will go back to Position Control Mode");
       ros::Duration(20.0).sleep();
       
+      // Back to position control mode
       my_iiwa.setPositionControlMode();
       
       ROS_INFO_STREAM("Job done! Shutting down...");
