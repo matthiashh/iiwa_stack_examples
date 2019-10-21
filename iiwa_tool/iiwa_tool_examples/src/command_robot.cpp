@@ -1,4 +1,4 @@
-#include <iiwa_ros.h>
+#include <iiwa_ros/iiwa_ros.h>
 #include <cmath>
 
 // getTimeToDestination() can also return negative values and the info from the cabinet take some milliseconds to update once the motion is started.

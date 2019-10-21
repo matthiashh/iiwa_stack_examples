@@ -1,4 +1,4 @@
-#include <iiwa_ros.h>
+#include <iiwa_ros/iiwa_ros.h>
 #include <iiwa_ros/conversions.h>
 
 int main (int argc, char **argv) {
@@ -26,7 +26,7 @@ int main (int argc, char **argv) {
       
       ROS_INFO_STREAM("The robot will be now set in Cartesian Impedance Mode");
       // Low stiffness only along Z.
-      my_iiwa.getSmartServoService().setCartesianImpedanceMode(iiwa_ros::cartesianQuantityFromDouble(1500,1500,350,300,300,300), iiwa_ros::cartesianQuantityFromDouble(0.7));
+      my_iiwa.getSmartServoService().setCartesianImpedanceMode(iiwa_ros::CartesianQuantityFromDouble(1500,1500,350,300,300,300), iiwa_ros::CartesianQuantityFromDouble(0.7));
       ROS_INFO_STREAM("In 20 seconds the robot will go back to Position Control Mode");
       ros::Duration(20.0).sleep();
       
